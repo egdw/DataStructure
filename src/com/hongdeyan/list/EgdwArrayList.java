@@ -1,6 +1,8 @@
 package com.hongdeyan.list;
 
-import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 /**
  * 自己实现ArrayList
@@ -240,5 +242,41 @@ public class EgdwArrayList<E> {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+
+    public Iterator<E> iterator() {
+        return new Itr();
+    }
+
+
+    private class Itr implements Iterator<E> {
+
+        private int itrCursor;
+        private int itrSize;
+
+
+        @Override
+        public boolean hasNext() {
+            if (itrSize < size) {
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public E next() {
+            return (E) elements[itrSize++];
+        }
+
+        @Override
+        public void remove() {
+            EgdwArrayList.this.removeIndex(--itrSize);
+        }
+
+        @Override
+        public void forEachRemaining(Consumer<? super E> action) {
+
+        }
     }
 }
