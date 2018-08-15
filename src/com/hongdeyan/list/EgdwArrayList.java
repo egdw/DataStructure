@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * 自己实现ArrayList
  */
-public class EgdwArrayList {
+public class EgdwArrayList<E> {
 
     private Object[] elements;
 
@@ -85,7 +85,7 @@ public class EgdwArrayList {
      * @param element 元素
      * @return 添加进入时候的索引
      */
-    public int add(Object element) {
+    public int add(E element) {
         ensureExplicitCapacity();
         modCount++;
         return addLast(element);
@@ -97,7 +97,7 @@ public class EgdwArrayList {
      * @param element 添加的元素
      * @return 返回添加进入时候的索引值
      */
-    public int addLast(Object element) {
+    public int addLast(E element) {
         ensureExplicitCapacity();
         elements[size++] = element;
         modCount++;
@@ -137,7 +137,7 @@ public class EgdwArrayList {
      * @param index   置顶索引
      * @return 是否成功
      */
-    public boolean add(Object element, int index) {
+    public boolean add(E element, int index) {
         ensureExplicitCapacity();
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("index small 0 or index big elements size");
@@ -158,7 +158,7 @@ public class EgdwArrayList {
      * @param index   指定索引
      * @return
      */
-    public boolean set(Object element, int index) {
+    public boolean set(E element, int index) {
         if (index > size) {
             throw new IllegalArgumentException("index too big");
         }
@@ -187,7 +187,7 @@ public class EgdwArrayList {
      * @param element 数据
      * @return 是否完成
      */
-    public boolean remove(Object element) {
+    public boolean remove(E element) {
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(element)) {
                 return removeIndex(i);
@@ -214,6 +214,15 @@ public class EgdwArrayList {
         size--;
         modCount++;
         return true;
+    }
+
+
+    public void clear() {
+        modCount++;
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
     }
 
 
