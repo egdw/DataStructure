@@ -1,12 +1,23 @@
 package com.hongdeyan.list;
 
+import java.util.Arrays;
+
 /**
  * 自己实现ArrayList
  */
 public class EgdwArrayList {
 
     private Object[] elements;
+
     private int size;
+    // 记录修改次数
+    private int modCount;
+    // 默认初始大小
+    private static final int DEFAULT_SIZE = 10;
+    // 默认扩大大小
+    private static final int DEFAULT_GROW_SIZE = 10;
+    // 默认剩余最低容量
+    private static final int DEFAULT_NEED_GROW_MIN_SIZE = 5;
 
     /**
      * 构造函数传入初始elment大小
@@ -17,20 +28,20 @@ public class EgdwArrayList {
         if (size < 0) {
             throw new IllegalArgumentException("size can't small 0");
         }
-        this.size = size;
         elements = new Object[size];
     }
 
     public EgdwArrayList() {
         //如果不设置的话就默认为10
-        this(10);
+        this(EgdwArrayList.DEFAULT_SIZE);
     }
 
     /**
      * 获取当前的size大小
+     *
      * @return
      */
-    public int size(){
+    public int size() {
         return size;
     }
 
@@ -75,6 +86,8 @@ public class EgdwArrayList {
      * @return 添加进入时候的索引
      */
     public int add(Object element) {
+        ensureExplicitCapacity();
+        modCount++;
         return addLast(element);
     }
 
@@ -85,19 +98,138 @@ public class EgdwArrayList {
      * @return 返回添加进入时候的索引值
      */
     public int addLast(Object element) {
-        if (size == elements.length) {
-            //如果数组已经放满了,则抛出异常
-            throw new ArrayIndexOutOfBoundsException("array is full");
-        }
-        elements[size] = element;
-        size++;
+        ensureExplicitCapacity();
+        elements[size++] = element;
+        modCount++;
         return size - 1;
     }
 
+    /**
+     * 判断容量是否不够用
+     */
+    private void ensureExplicitCapacity() {
+        int spaceSize = elements.length - size;
+        if (spaceSize < EgdwArrayList.DEFAULT_NEED_GROW_MIN_SIZE) {
+            //说明数据已经满了或快满了.需要扩大
+            grow();
+        }
+    }
 
-    public void add(Object element, int index) {
+    /**
+     * 增加容量
+     */
+    private void grow() {
+        Object[] arrs = new Object[size + EgdwArrayList.DEFAULT_GROW_SIZE];
+        for (int i = 0; i < elements.length; i++) {
+            arrs[i] = elements[i];
+            //手动清空,让GC去清空数据
+            elements[i] = null;
+        }
+        elements = null;
+        elements = arrs;
+        modCount++;
+    }
 
+    /**
+     * 添加到指定索引
+     *
+     * @param element 数据
+     * @param index   置顶索引
+     * @return 是否成功
+     */
+    public boolean add(Object element, int index) {
+        ensureExplicitCapacity();
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException("index small 0 or index big elements size");
+        }
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
+        elements[index] = element;
+        size++;
+        modCount++;
+        return true;
+    }
+
+    /**
+     * 设置指定索引的值
+     *
+     * @param element 数据
+     * @param index   指定索引
+     * @return
+     */
+    public boolean set(Object element, int index) {
+        if (index > size) {
+            throw new IllegalArgumentException("index too big");
+        }
+        elements[index] = element;
+        modCount++;
+        return true;
+    }
+
+    /**
+     * 弹出末尾最后一位数据
+     *
+     * @return
+     */
+    public boolean pop() {
+        if (size > 0) {
+            System.out.println("size > 0");
+            elements[(size--) - 1] = null;
+        }
+        modCount++;
+        return true;
+    }
+
+    /**
+     * 移除某个地方相同的数据
+     *
+     * @param element 数据
+     * @return 是否完成
+     */
+    public boolean remove(Object element) {
+        for (int i = 0; i < size; i++) {
+            if (elements[i].equals(element)) {
+                return removeIndex(i);
+            }
+        }
+        return false;
     }
 
 
+    /**
+     * 移除指定索引位的数据
+     *
+     * @param index 索引
+     * @return 是否完成
+     */
+    public boolean removeIndex(int index) {
+        if (index > size || index < 0) {
+            throw new IllegalArgumentException("index too small or too big");
+        }
+        for (int i = index; i < size; i++) {
+            elements[i] = elements[i + 1];
+        }
+        elements[size] = null;
+        size--;
+        modCount++;
+        return true;
+    }
+
+
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("EgdwArrayList[");
+        for (int i = 0; i < size; i++) {
+            if (i == size - 1) {
+                sb.append(elements[i]);
+            } else {
+                sb.append(elements[i]).append(",");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 }
