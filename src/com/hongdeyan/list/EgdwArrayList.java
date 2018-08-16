@@ -70,14 +70,14 @@ public class EgdwArrayList<E> {
      * @param index
      * @return 返回的对象
      */
-    public Object get(int index) {
+    public E get(int index) {
         if (index < 0) {
             throw new IllegalArgumentException("index can not small 0");
         }
         if (index > size) {
             throw new IllegalArgumentException("out of EgdwArraylist size!");
         }
-        return elements[index];
+        return (E) elements[index];
     }
 
     /**
@@ -120,9 +120,6 @@ public class EgdwArrayList<E> {
      * 判断数组是否空闲太多.进行回收
      */
     private void ensureExplicitCapacityRelease() {
-        if(size>0){
-            System.out.println(elements.length / size);
-        }
         if (size > 0 && elements.length / size > EgdwArrayList.DEFAULT_RELEASE_SIZE) {
             //如果小于某个值说明空间浪费太多.
             decline();
@@ -214,13 +211,13 @@ public class EgdwArrayList<E> {
      * @param element 数据
      * @return 是否完成
      */
-    public boolean remove(E element) {
+    public E remove(E element) {
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(element)) {
                 return removeIndex(i);
             }
         }
-        return false;
+        return null;
     }
 
 
@@ -230,10 +227,11 @@ public class EgdwArrayList<E> {
      * @param index 索引
      * @return 是否完成
      */
-    public boolean removeIndex(int index) {
+    public E removeIndex(int index) {
         if (index > size || index < 0) {
             throw new IllegalArgumentException("index too small or too big");
         }
+        Object temp = elements[index];
         for (int i = index; i < size; i++) {
             elements[i] = elements[i + 1];
         }
@@ -241,7 +239,7 @@ public class EgdwArrayList<E> {
         size--;
         modCount++;
         ensureExplicitCapacityRelease();
-        return true;
+        return (E) temp;
     }
 
 
@@ -270,6 +268,20 @@ public class EgdwArrayList<E> {
             elements[i] = null;
         }
         size = 0;
+    }
+
+    /**
+     * 返回指定元素的当前索引
+     * @param element 元素
+     * @return 当前索引
+     */
+    public int indexOf(E element) {
+        for (int i = 0; i < size; i++) {
+            if (elements[i].equals(element)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 
