@@ -1,7 +1,6 @@
 package com.hongdeyan.list;
 
 import java.util.Iterator;
-import java.util.Spliterator;
 import java.util.function.Consumer;
 
 /**
@@ -17,9 +16,9 @@ public class EgdwArrayList<E> {
     // 默认初始大小
     private static final int DEFAULT_SIZE = 10;
     // 默认扩大大小
-    private static final int DEFAULT_GROW_SIZE = 10;
-    // 默认剩余最低容量
-    private static final int DEFAULT_NEED_GROW_MIN_SIZE = 5;
+    private static final double DEFAULT_GROW_SIZE = 1.5;
+    // 默认回收空间大小
+    private static final double DEFAULT_RELEASE_SIZE = 4;
 
     /**
      * 构造函数传入初始elment大小
@@ -111,17 +110,42 @@ public class EgdwArrayList<E> {
      */
     private void ensureExplicitCapacity() {
         int spaceSize = elements.length - size;
-        if (spaceSize < EgdwArrayList.DEFAULT_NEED_GROW_MIN_SIZE) {
+        if (spaceSize == 0) {
             //说明数据已经满了或快满了.需要扩大
             grow();
         }
     }
 
     /**
+     * 判断数组是否空闲太多.进行回收
+     */
+    private void ensureExplicitCapacityRelease() {
+        if(size>0){
+            System.out.println(elements.length / size);
+        }
+        if (size > 0 && elements.length / size > EgdwArrayList.DEFAULT_RELEASE_SIZE) {
+            //如果小于某个值说明空间浪费太多.
+            decline();
+        }
+    }
+
+    /**
+     * 减少容量
+     */
+    private void decline() {
+        Object[] objs = new Object[elements.length / 2];
+        for (int i = 0; i < size; i++) {
+            objs[i] = elements[i];
+            elements[i] = null;
+        }
+        elements = objs;
+    }
+
+    /**
      * 增加容量
      */
     private void grow() {
-        Object[] arrs = new Object[size + EgdwArrayList.DEFAULT_GROW_SIZE];
+        Object[] arrs = new Object[(int) (size * EgdwArrayList.DEFAULT_GROW_SIZE)];
         for (int i = 0; i < elements.length; i++) {
             arrs[i] = elements[i];
             //手动清空,让GC去清空数据
@@ -180,6 +204,7 @@ public class EgdwArrayList<E> {
             elements[(size--) - 1] = null;
         }
         modCount++;
+        ensureExplicitCapacityRelease();
         return true;
     }
 
@@ -215,10 +240,30 @@ public class EgdwArrayList<E> {
         elements[size] = null;
         size--;
         modCount++;
+        ensureExplicitCapacityRelease();
         return true;
     }
 
 
+    /**
+     * 是否包含某个元素
+     *
+     * @param element 元素
+     * @return 是否
+     */
+    public boolean contains(E element) {
+        for (int i = 0; i < size; i++) {
+            if (elements[i].equals(element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 清空arrylist数据
+     */
     public void clear() {
         modCount++;
         for (int i = 0; i < size; i++) {

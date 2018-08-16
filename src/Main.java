@@ -6,15 +6,25 @@ import java.util.Iterator;
 public class Main {
 
     public static void main(String[] args) {
-        EgdwArrayList<String> list = new EgdwArrayList<>();
+        EgdwArrayList<String> list = new EgdwArrayList<>(3);
         list.add("12312313");
         list.add("21312313");
+        list.add("21312313");
+
+        list.add("21312313");
+
+        list.add("21312313");
+
+        list.add("21312313");
+
+        list.add("21312313");
+
         System.out.println(list);
 
         Iterator<String> iterator = list.iterator();
         while(iterator.hasNext()){
             String next = iterator.next();
-            if(next.equals("12312313")){
+            if(next.equals("12312313") || next.equals("21312313")){
                 iterator.remove();
             }
         }
