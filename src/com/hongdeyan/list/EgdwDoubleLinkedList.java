@@ -102,6 +102,20 @@ public class EgdwDoubleLinkedList<E> {
     }
 
 
+    public boolean removeFirst(){
+        return deleteByIndex(0);
+    }
+
+    private  boolean deleteByIndex(int index) {
+        Node nextNode = firstNode;
+        for (int i = 0; i <= index; i++) {
+            nextNode = nextNode.next;
+        }
+        nextNode.pre.next = nextNode.next;
+        return true;
+    }
+
+
     public int size() {
         return size;
     }
