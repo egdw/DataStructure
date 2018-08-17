@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 /**
  * 单链表
- * 实现栈的功能
+ *
  */
 public class EgdwSingleLinkedList<E> implements EgdwListImpl<E> {
 
