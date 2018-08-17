@@ -1,29 +1,27 @@
+import com.hongdeyan.list.EgdwSingleLinkedList;
 import com.hongdeyan.queue.EgdwArrayQueue;
 import com.hongdeyan.queue.EgdwCirculationQueue;
 import com.hongdeyan.queue.EgdwQueue;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        testQueue(new EgdwArrayQueue());
+        EgdwSingleLinkedList<Integer> list = new EgdwSingleLinkedList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
 
-        testQueue(new EgdwCirculationQueue());
-
+        System.out.println(list.getLast());
+        System.out.println(list.delete(2));
+        System.out.println(list);
     }
 
     public static void testQueue(EgdwQueue queue) {
-        long startTime = System.currentTimeMillis();
-        Random random = new Random();
-        for (int i = 0; i < 100000; i++) {
-            queue.add(random.nextInt(Integer.MAX_VALUE));
-        }
-        for (int i = 0; i < queue.size(); i++) {
-            queue.poll();
-        }
-        long endTime = System.currentTimeMillis();
-        System.out.println("总时长为:" + (double)(endTime - startTime) / 1000);
+
     }
 }
