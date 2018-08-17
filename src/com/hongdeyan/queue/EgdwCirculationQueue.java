@@ -46,7 +46,7 @@ public class EgdwCirculationQueue<E> implements EgdwQueue<E> {
     @Override
     public boolean add(E e) {
         int curIndex = queueLast % list.length;
-        if ((curIndex + 1) == queueFirst && (curIndex != 0 || queueFirst != 0)) {
+        if ((curIndex + 1) % list.length == queueFirst) {
             //说明队列满了
             grow();
             list[queueLast] = e;
@@ -89,9 +89,7 @@ public class EgdwCirculationQueue<E> implements EgdwQueue<E> {
      */
     @Override
     public E poll() {
-        Object last = list[queueFirst];
-        remove();
-        return (E) last;
+        return remove();
     }
 
     /**

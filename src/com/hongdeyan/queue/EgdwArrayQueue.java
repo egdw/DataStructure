@@ -29,6 +29,7 @@ public class EgdwArrayQueue<E> implements EgdwQueue<E> {
 
     /**
      * 添加数据到队列末尾
+     *
      * @param e
      * @return
      */
@@ -41,6 +42,7 @@ public class EgdwArrayQueue<E> implements EgdwQueue<E> {
     /**
      * 单纯删除队列首位数据
      * 如果不存在则抛出异常
+     *
      * @return
      */
     @Override
@@ -51,6 +53,7 @@ public class EgdwArrayQueue<E> implements EgdwQueue<E> {
     /**
      * 从队列首列中提取出来并移除
      * 如果队列为空返回null
+     *
      * @return
      */
     @Override
@@ -82,6 +85,11 @@ public class EgdwArrayQueue<E> implements EgdwQueue<E> {
     @Override
     public E peek() {
         return list.get(0);
+    }
+
+    @Override
+    public int size() {
+        return list.size();
     }
 
 

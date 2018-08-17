@@ -10,4 +10,6 @@ public interface EgdwQueue<E> {
     E element();
 
     E peek();
+
+    int size();
 }
