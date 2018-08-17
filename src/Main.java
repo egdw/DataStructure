@@ -1,13 +1,5 @@
-import com.hongdeyan.list.EgdwDoubleLinkedList;
-import com.hongdeyan.list.EgdwSingleLinkedList;
-import com.hongdeyan.queue.EgdwArrayQueue;
-import com.hongdeyan.queue.EgdwCirculationQueue;
 import com.hongdeyan.queue.EgdwLinkedQueue;
 import com.hongdeyan.queue.EgdwQueue;
-import com.hongdeyan.stack.EgdwLinkedStack;
-
-import java.util.LinkedList;
-import java.util.Random;
 
 public class Main {
 

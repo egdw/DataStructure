@@ -1,7 +1,7 @@
 package com.hongdeyan.list;
 
 /**
- * 双线链表
+ * 双向链表
  *
  * @author egdw
  */
