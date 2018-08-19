@@ -5,7 +5,7 @@ import com.hongdeyan.list.EgdwDoubleLinkedList;
 import java.util.NoSuchElementException;
 
 /**
- * 基于双向连别的队列
+ * 基于双向链表的队列
  * @author egdw
  */
 public class EgdwLinkedQueue<E> implements EgdwQueue<E> {

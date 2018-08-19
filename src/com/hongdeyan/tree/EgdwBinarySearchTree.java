@@ -1,5 +1,9 @@
 package com.hongdeyan.tree;
 
+import com.hongdeyan.queue.EgdwLinkedQueue;
+
+import java.util.NoSuchElementException;
+
 /**
  * 二分搜索树
  * 二分搜索树不会包含相同的元素
@@ -113,17 +117,17 @@ public class EgdwBinarySearchTree<E extends Comparable> {
 
 
     private Node<E> nodeAdd(Node<E> root, E element) {
-
         if (root == null) {
             return new Node<E>(element);
         }
-
         int rootCompareResult = root.getElement().compareTo(element);
         if (rootCompareResult > 0) {
             root.setLeftNode(nodeAdd(root.getLeftNode(), element));
+            System.out.println("调用" + element);
             size++;
         } else if (rootCompareResult < 0) {
             root.setRightNode(nodeAdd(root.getRightNode(), element));
+            System.out.println("调用" + element);
             size++;
         }
         return root;
@@ -165,48 +169,98 @@ public class EgdwBinarySearchTree<E extends Comparable> {
      * @return 是否完成
      * 删除算法可能有问题.不能保证可靠性
      */
-    public boolean remove(E element) {
-        return nodeRemove(root, element);
+    public E remove(E element) {
+        Node<E> eNode = nodeRemove(root, element);
+        E e = eNode.getElement();
+        return e;
     }
 
-    private boolean nodeRemove(Node<E> root, E element) {
+    private Node<E> nodeRemove(Node<E> root, E element) {
         if (root == null) {
-            return false;
+            throw new NoSuchElementException("node not found");
         }
         int compareResult = element.compareTo(root.getElement());
         if (compareResult > 0) {
-            return nodeRemove(root.getRightNode(), element);
+            root.rightNode = nodeRemove(root.getRightNode(), element);
+            return root;
         } else if (compareResult < 0) {
-            return nodeRemove(root.getLeftNode(), element);
+            root.leftNode = nodeRemove(root.getLeftNode(), element);
+            return root;
         } else {
             //如果相同,进行删除操作
-            if (root.getRightNode() != null) {
-                //如果左孩子不等于空,那么替换当前自己的位置
-                Node rightNode = root.getRightNode();
+            //需要分三种情况
+            Node leftNode = root.getLeftNode();
+            Node rightNode = root.getRightNode();
+            //如果没有子node的情况
+            if (leftNode == null && rightNode == null) {
+                root = null;
+            } else if (leftNode == null && rightNode != null) {
+                //如果左孩子没有.右孩子有
                 root.setElement((E) rightNode.getElement());
                 root.setRightNode(rightNode.getRightNode());
-                Node leftLastChildNode = getLeftLastChildNode(rightNode);
-                if (leftLastChildNode != null) {
-                    leftLastChildNode.setLeftNode(root.getLeftNode());
-                    root.setLeftNode(leftLastChildNode);
-                }
-            } else if (root.getLeftNode() != null) {
-                Node leftNode = root.getLeftNode();
+            } else if (leftNode != null && rightNode == null) {
+                //如果左孩子有,右孩子没有
                 root.setElement((E) leftNode.getElement());
                 root.setLeftNode(leftNode.getLeftNode());
-                root.setRightNode(leftNode.getRightNode());
             } else {
-                //如果两者都为null的话
-                root.element = null;
-                root.rightNode = null;
-                root.leftNode = null;
+                //如果左右孩子都有,找到左节点最大的数或者右节点最小的数进行替换
+                E e = (E) findBiggestNode(leftNode).getElement();
+                System.out.println("biggest:" + e);
+                System.out.println("currentRoot:" + root.getElement());
+                //返回左节点最大的数并删除左节点最大的数
+//                root.setElement((E) removeBiggestNode(leftNode, null));
+                root.setElement(e);
+                root.setLeftNode(nodeRemove(leftNode, e));
             }
-            return true;
+            System.out.println("删除");
+            size--;
+            return root;
         }
     }
 
     /**
-     * 找到某个Node左海子最下的那个分支.
+     * 查找某个节点下最大的值
+     *
+     * @param root 节点
+     * @return 返回最大的值
+     */
+    private Node<E> findBiggestNode(Node<E> root) {
+        if (root == null) {
+            throw new UnsatisfiedLinkError("not found node");
+        }
+        if (root.rightNode != null) {
+            return findBiggestNode(root.rightNode);
+        } else {
+            return root;
+        }
+    }
+
+
+    /**
+     * 删除某个节点下最大的值
+     *
+     * @param root    需要删除的某个节点
+     * @param preNode 保存上一个子节点.
+     * @return
+     */
+    private E removeBiggestNode(Node<E> root, Node<E> preNode) {
+        if (root == null) {
+            throw new UnsatisfiedLinkError("not found node");
+        }
+        if (root.rightNode != null) {
+            return (E) removeBiggestNode(root.rightNode, root);
+        } else {
+            //说明root.rightNode == null 了
+            //删除
+            preNode.setRightNode(null);
+            size--;
+            return root.getElement();
+        }
+    }
+
+
+    /**
+     * 找到某个Node左孩子最下的那个分支.
      *
      * @param root
      * @return
@@ -250,8 +304,12 @@ public class EgdwBinarySearchTree<E extends Comparable> {
         behindForeach(root);
     }
 
+    public void foreachLevel() {
+        levelForeach(root);
+    }
+
     /**
-     * 前序遍历
+     * 前序遍历(深度优先遍历)
      */
     private void preForeach(Node<E> root) {
         //首先先判断当前的根节点是否为null
@@ -267,7 +325,7 @@ public class EgdwBinarySearchTree<E extends Comparable> {
     }
 
     /**
-     * 中序遍历
+     * 中序遍历(深度优先遍历)
      *
      * @param root
      */
@@ -282,7 +340,7 @@ public class EgdwBinarySearchTree<E extends Comparable> {
 
 
     /**
-     * 后续遍历
+     * 后续遍历(深度优先遍历)
      *
      * @param root
      */
@@ -295,5 +353,26 @@ public class EgdwBinarySearchTree<E extends Comparable> {
         System.out.println(root);
     }
 
-
+    /**
+     * 层序遍历(广度优先遍历)
+     * 通过使用队列的形式实现
+     *
+     * @param root
+     */
+    private void levelForeach(Node<E> root) {
+        //需要使用队列完成操作.这里使用我自己定义的基于链表的队列
+        //当然这里也可以使用java自带的队列完成操作
+        EgdwLinkedQueue<Node> queue = new EgdwLinkedQueue<>();
+        queue.add(root);
+        while (queue.size() != 0) {
+            Node node = queue.poll();
+            System.out.println(node.getElement());
+            if (node.leftNode != null) {
+                queue.add(node.leftNode);
+            }
+            if (node.rightNode != null) {
+                queue.add(node.rightNode);
+            }
+        }
+    }
 }

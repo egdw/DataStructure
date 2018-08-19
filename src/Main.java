@@ -12,9 +12,16 @@ public class Main {
         tree.add(20);
         tree.add(5);
         tree.add(22);
+        tree.add(23);
         tree.add(18);
-        tree.remove(18);
-        tree.foreachBehind();
+        tree.add(16);
+        tree.add(19);
+
+        tree.remove(20);
+//        System.out.println(tree.remove(18));
+        tree.foreachLevel();
+        System.out.println(tree.size());
+
     }
 
     public static void testQueue(EgdwQueue queue) {
