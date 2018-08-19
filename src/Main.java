@@ -14,7 +14,7 @@ public class Main {
         tree.add(22);
         tree.add(18);
         tree.remove(18);
-        tree.foreach();
+        tree.foreachBehind();
     }
 
     public static void testQueue(EgdwQueue queue) {

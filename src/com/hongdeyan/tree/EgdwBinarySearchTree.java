@@ -115,15 +115,16 @@ public class EgdwBinarySearchTree<E extends Comparable> {
     private Node<E> nodeAdd(Node<E> root, E element) {
 
         if (root == null) {
-            size++;
             return new Node<E>(element);
         }
 
         int rootCompareResult = root.getElement().compareTo(element);
         if (rootCompareResult > 0) {
             root.setLeftNode(nodeAdd(root.getLeftNode(), element));
+            size++;
         } else if (rootCompareResult < 0) {
             root.setRightNode(nodeAdd(root.getRightNode(), element));
+            size++;
         }
         return root;
     }
@@ -237,14 +238,21 @@ public class EgdwBinarySearchTree<E extends Comparable> {
     }
 
 
-    /**
-     * 前序遍历
-     */
-    public void foreach() {
+    public void foreachPre() {
         preForeach(root);
     }
 
+    public void foreachCenter() {
+        centerForeach(root);
+    }
 
+    public void foreachBehind() {
+        behindForeach(root);
+    }
+
+    /**
+     * 前序遍历
+     */
     private void preForeach(Node<E> root) {
         //首先先判断当前的根节点是否为null
         if (root == null) {
@@ -257,4 +265,35 @@ public class EgdwBinarySearchTree<E extends Comparable> {
         preForeach(root.getLeftNode());
         preForeach(root.getRightNode());
     }
+
+    /**
+     * 中序遍历
+     *
+     * @param root
+     */
+    private void centerForeach(Node<E> root) {
+        if (root == null) {
+            return;
+        }
+        centerForeach(root.getLeftNode());
+        System.out.println(root);
+        centerForeach(root.getRightNode());
+    }
+
+
+    /**
+     * 后续遍历
+     *
+     * @param root
+     */
+    private void behindForeach(Node<E> root) {
+        if (root == null) {
+            return;
+        }
+        behindForeach(root.getLeftNode());
+        behindForeach(root.getRightNode());
+        System.out.println(root);
+    }
+
+
 }
