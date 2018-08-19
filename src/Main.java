@@ -1,19 +1,20 @@
 import com.hongdeyan.queue.EgdwLinkedQueue;
 import com.hongdeyan.queue.EgdwQueue;
+import com.hongdeyan.tree.EgdwBinarySearchTree;
+
+import java.util.TreeMap;
 
 public class Main {
 
     public static void main(String[] args) {
-        EgdwLinkedQueue<Integer> queue = new EgdwLinkedQueue<>();
-        queue.add(100);
-        queue.add(99);
-        queue.add(98);
-        queue.add(97);
-        queue.add(96);
-        queue.add(95);
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());System.out.println(queue.poll());System.out.println(queue.poll());
-
+        EgdwBinarySearchTree<Integer> tree = new EgdwBinarySearchTree<>();
+        tree.add(10);
+        tree.add(20);
+        tree.add(5);
+        tree.add(22);
+        tree.add(18);
+        tree.remove(18);
+        tree.foreach();
     }
 
     public static void testQueue(EgdwQueue queue) {
