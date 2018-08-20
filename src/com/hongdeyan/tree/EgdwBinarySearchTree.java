@@ -198,28 +198,20 @@ public class EgdwBinarySearchTree<E extends Comparable> {
             //如果没有子node的情况
             if (leftNode == null && rightNode == null) {
                 root = null;
-                System.out.println("删除");
-
                 size--;
             } else if (leftNode == null && rightNode != null) {
                 //如果左孩子没有.右孩子有
                 root.setElement((E) rightNode.getElement());
                 root.setRightNode(rightNode.getRightNode());
-                System.out.println("删除");
-
                 size--;
             } else if (leftNode != null && rightNode == null) {
                 //如果左孩子有,右孩子没有
                 root.setElement((E) leftNode.getElement());
                 root.setLeftNode(leftNode.getLeftNode());
-                System.out.println("删除");
-
                 size--;
             } else {
                 //如果左右孩子都有,找到左节点最大的数或者右节点最小的数进行替换
                 E e = (E) findBiggestNode(leftNode).getElement();
-                System.out.println("biggest:" + e);
-                System.out.println("currentRoot:" + root.getElement());
                 //返回左节点最大的数并删除左节点最大的数
 //                root.setElement((E) removeBiggestNode(leftNode, null));
                 root.setElement(e);

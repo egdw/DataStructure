@@ -10,4 +10,6 @@ public interface EgdwMap<K, V> {
     public boolean remove(K key);
 
     public V get(K key);
+
+    public int size();
 }
