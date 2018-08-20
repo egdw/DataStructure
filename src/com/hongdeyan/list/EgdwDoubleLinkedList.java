@@ -102,11 +102,11 @@ public class EgdwDoubleLinkedList<E> {
     }
 
 
-    public boolean removeFirst(){
+    public boolean removeFirst() {
         return deleteByIndex(0);
     }
 
-    private  boolean deleteByIndex(int index) {
+    private boolean deleteByIndex(int index) {
         Node nextNode = firstNode;
         for (int i = 0; i <= index; i++) {
             nextNode = nextNode.next;
@@ -118,6 +118,47 @@ public class EgdwDoubleLinkedList<E> {
 
     public int size() {
         return size;
+    }
+
+    public boolean contains(E element) {
+        Node<E> temp = firstNode;
+        while (temp != null) {
+            if (element.equals(temp.getElement())) {
+                //判断是否相同;
+                return true;
+            }
+            temp = temp.getNext();
+        }
+        return false;
+    }
+
+    public boolean remove(E element) {
+        return removeElement(firstNode, element);
+    }
+
+
+    private boolean removeElement(Node<E> root, E element) {
+        if (root == null) {
+            //说明没有找到相应的节点
+            return false;
+        }
+        if (element.equals(root.getElement())) {
+            //如果相等的话,删除掉
+            Node<E> next = root.getNext();
+            Node<E> pre = root.getPre();
+            pre.setNext(next);
+            next.setPre(pre);
+            size--;
+            return true;
+        } else {
+            return removeElement(root.getNext(), element);
+        }
+    }
+
+    public void clear() {
+        this.firstNode = null;
+        this.tailNode = null;
+        size = 0;
     }
 
     private class Node<E> {

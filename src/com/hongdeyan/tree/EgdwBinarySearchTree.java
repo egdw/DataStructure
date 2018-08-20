@@ -391,4 +391,12 @@ public class EgdwBinarySearchTree<E extends Comparable> {
             }
         }
     }
+
+    /**
+     * 清空二叉树
+     */
+    public void clear() {
+        this.root = null;
+        this.size = 0;
+    }
 }
