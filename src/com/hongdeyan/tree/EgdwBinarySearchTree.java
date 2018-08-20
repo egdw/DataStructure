@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 /**
  * 二分搜索树
  * 二分搜索树不会包含相同的元素
- * 元素必须是可以比较大小的
+ * 元素必须是可以比较大小的且实现Comparable接口
  *
  * @author egdw
  */
@@ -118,17 +118,14 @@ public class EgdwBinarySearchTree<E extends Comparable> {
 
     private Node<E> nodeAdd(Node<E> root, E element) {
         if (root == null) {
+            size++;
             return new Node<E>(element);
         }
         int rootCompareResult = root.getElement().compareTo(element);
         if (rootCompareResult > 0) {
             root.setLeftNode(nodeAdd(root.getLeftNode(), element));
-            System.out.println("调用" + element);
-            size++;
         } else if (rootCompareResult < 0) {
             root.setRightNode(nodeAdd(root.getRightNode(), element));
-            System.out.println("调用" + element);
-            size++;
         }
         return root;
     }
@@ -146,6 +143,13 @@ public class EgdwBinarySearchTree<E extends Comparable> {
     }
 
 
+    /**
+     * 查找某个节点下的某个元素
+     *
+     * @param root
+     * @param element
+     * @return
+     */
     private Node<E> nodeFind(Node<E> root, E element) {
         if (root == null || root.getElement() == null) {
             return null;
@@ -194,14 +198,23 @@ public class EgdwBinarySearchTree<E extends Comparable> {
             //如果没有子node的情况
             if (leftNode == null && rightNode == null) {
                 root = null;
+                System.out.println("删除");
+
+                size--;
             } else if (leftNode == null && rightNode != null) {
                 //如果左孩子没有.右孩子有
                 root.setElement((E) rightNode.getElement());
                 root.setRightNode(rightNode.getRightNode());
+                System.out.println("删除");
+
+                size--;
             } else if (leftNode != null && rightNode == null) {
                 //如果左孩子有,右孩子没有
                 root.setElement((E) leftNode.getElement());
                 root.setLeftNode(leftNode.getLeftNode());
+                System.out.println("删除");
+
+                size--;
             } else {
                 //如果左右孩子都有,找到左节点最大的数或者右节点最小的数进行替换
                 E e = (E) findBiggestNode(leftNode).getElement();
@@ -212,8 +225,6 @@ public class EgdwBinarySearchTree<E extends Comparable> {
                 root.setElement(e);
                 root.setLeftNode(nodeRemove(leftNode, e));
             }
-            System.out.println("删除");
-            size--;
             return root;
         }
     }
@@ -275,6 +286,11 @@ public class EgdwBinarySearchTree<E extends Comparable> {
         return null;
     }
 
+    /**
+     * 返回当前的size
+     *
+     * @return
+     */
     public int size() {
         return size;
     }
