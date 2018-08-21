@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 /**
  * 基于二分搜索树的Map映射
- *
+ * 效率高.速度快
  * @param <K> 主键
  * @param <V> 值
  */

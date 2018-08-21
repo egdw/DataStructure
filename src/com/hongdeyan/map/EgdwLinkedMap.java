@@ -2,7 +2,7 @@ package com.hongdeyan.map;
 
 /**
  * 基于链表的map映射
- * 性能比较差只是做练习使用.
+ * 性能差只是做练习使用.
  * @author egdw
  */
 public class EgdwLinkedMap<K, V> implements EgdwMap<K, V> {
