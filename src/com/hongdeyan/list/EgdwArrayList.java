@@ -1,6 +1,7 @@
 package com.hongdeyan.list;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 /**
@@ -243,6 +244,19 @@ public class EgdwArrayList<E> {
     }
 
 
+    public E removeLast() {
+        if (size <= 0) {
+            throw new NoSuchElementException("no element!");
+        }
+        E element = (E) elements[size - 1];
+        elements[size-1] = null;
+        size--;
+        modCount++;
+        ensureExplicitCapacityRelease();
+        return element;
+    }
+
+
     /**
      * 是否包含某个元素
      *
@@ -272,6 +286,7 @@ public class EgdwArrayList<E> {
 
     /**
      * 返回指定元素的当前索引
+     *
      * @param element 元素
      * @return 当前索引
      */
