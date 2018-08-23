@@ -43,6 +43,17 @@ public class EgdwMaxHeap<E extends Comparable> {
     }
 
     /**
+     * 获取root节点
+     * @return 根节点
+     */
+    public E getTop(){
+        if(size() == 0){
+            throw new IndexOutOfBoundsException("size equals zero");
+        }
+        return list.get(0);
+    }
+
+    /**
      * 添加新元素
      *
      * @param element 元素
