@@ -1,18 +1,20 @@
-import com.hongdeyan.queue.EgdwPriorityQueue;
+import com.hongdeyan.tree.EgdwSegmentTree;
+import com.hongdeyan.tree.EgdwSegmentTreeMerge;
 
 public class Main {
 
     public static void main(String[] args) {
-        EgdwPriorityQueue<Integer> queue = new EgdwPriorityQueue<>();
-        queue.add(1010);
-        queue.add(1024);
-        queue.add(768);
-        queue.add(897);
+        EgdwSegmentTree<Integer> tree = new EgdwSegmentTree<>(new Integer[]{-5,10, 2, 6, 5, 23, 8,54}, new EgdwSegmentTreeMerge<Integer>() {
+            @Override
+            public Integer merge(Integer a, Integer b) {
+                return a + b;
+            }
+        });
 
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
+        tree.update(7,10);
+
+        Integer query = tree.query(6, 7);
+        System.out.println(query);
     }
 
 }

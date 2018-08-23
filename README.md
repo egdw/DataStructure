@@ -19,6 +19,8 @@
 * 基于二分搜索树的Map映射[EgdwBinarySearchMap]
 * 基于二叉完全树的最大堆[EgdwMaxHeap]
 * 基于最大堆的优先队列[EgdwPriorityQueue]
+* 基于数组的线段树[EgdwBinarySearchTree]
 
 ## 比较麻烦的...
 * 基于二叉完全树的最大堆[EgdwMaxHeap]
+* 基于数组的线段树[EgdwBinarySearchTree]
