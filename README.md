@@ -24,3 +24,6 @@
 ## 比较麻烦的...
 * 基于二叉完全树的最大堆[EgdwMaxHeap]
 * 基于数组的线段树[EgdwBinarySearchTree]
+
+## 进行中...
+* 基于treeMap的trie(字典树)
