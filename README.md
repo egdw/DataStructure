@@ -2,6 +2,7 @@
 
 > 自己的要求是如果各个数据结构之内需要调用其他的数据结构那么统一使用自己完成的数据结构而不使用Java自带的数据结构比如ArrayList、HashSet
 等等。。。自己的数据结构类或接口统一使用Egdw作为开头已区分官方的类或接口。
+> 当然了速度方面没有经过严谨的测试.只是能保证正常使用.
 
 ## 目前已完成
 * 动态数组[EgdwArrayList]
@@ -20,10 +21,10 @@
 * 基于二叉完全树的最大堆[EgdwMaxHeap]
 * 基于最大堆的优先队列[EgdwPriorityQueue]
 * 基于数组的线段树[EgdwBinarySearchTree]
+* 基于treeMap的trie(字典树)[EgdwTrie]
 
 ## 比较麻烦的...
 * 基于二叉完全树的最大堆[EgdwMaxHeap]
 * 基于数组的线段树[EgdwBinarySearchTree]
 
 ## 进行中...
-* 基于treeMap的trie(字典树)
