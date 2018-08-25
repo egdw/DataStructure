@@ -22,9 +22,13 @@
 * 基于最大堆的优先队列[EgdwPriorityQueue]
 * 基于数组的线段树[EgdwBinarySearchTree]
 * 基于treeMap的trie(字典树)[EgdwTrie]
-
+* 数组并查集QuickFind[EgdwQuickFind]
+* 并查集UnionFind(路径压缩+rank优化+size优化)[EgdwUnionFind]
 ## 比较麻烦的...
 * 基于二叉完全树的最大堆[EgdwMaxHeap]
 * 基于数组的线段树[EgdwBinarySearchTree]
+
+## 后续继续理解的
+* 并查集UnionFind(路径压缩+rank优化+size优化)[EgdwUnionFind]
 
 ## 进行中...
