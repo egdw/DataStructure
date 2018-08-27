@@ -24,12 +24,13 @@
 * 基于treeMap的trie(字典树)[EgdwTrie]
 * 数组并查集QuickFind[EgdwQuickFind]
 * 并查集UnionFind(路径压缩+rank优化+size优化)[EgdwUnionFind]
+* AVL(平衡二叉树)[EgdwAvlTree]
 ## 比较麻烦的...
 * 基于二叉完全树的最大堆[EgdwMaxHeap]
 * 基于数组的线段树[EgdwBinarySearchTree]
-
+* AVL(平衡二叉树)[EgdwAvlTree]
 ## 后续继续理解的
 * 并查集UnionFind(路径压缩+rank优化+size优化)[EgdwUnionFind]
-
+* AVL(平衡二叉树)[EgdwAvlTree]
 ## 进行中...
-* AVL进行中...
+
