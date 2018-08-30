@@ -25,12 +25,17 @@
 * 数组并查集QuickFind[EgdwQuickFind]
 * 并查集UnionFind(路径压缩+rank优化+size优化)[EgdwUnionFind]
 * AVL(平衡二叉树)[EgdwAvlTree]
+* 红黑树[EgdwRedBlackTree]
 ## 比较麻烦的...
 * 基于二叉完全树的最大堆[EgdwMaxHeap]
 * 基于数组的线段树[EgdwSegmentTree]
 * AVL(平衡二叉树)[EgdwAvlTree]
+## 很麻烦的
+* 红黑树[EgdwRedBlackTree]
+
 ## 后续继续理解的
 * 并查集UnionFind(路径压缩+rank优化+size优化)[EgdwUnionFind]
 * AVL(平衡二叉树)[EgdwAvlTree]
+* 红黑树[EgdwRedBlackTree]
+
 ## 进行中...
-* 红黑树...

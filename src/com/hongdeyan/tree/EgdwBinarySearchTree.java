@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * 二分搜索树
  * 二分搜索树不会包含相同的元素
  * 元素必须是可以比较大小的且实现Comparable接口
- *
+ * 极端情况下会退化成链表,导致高度不平衡
  * @author egdw
  */
 public class EgdwBinarySearchTree<E extends Comparable> {

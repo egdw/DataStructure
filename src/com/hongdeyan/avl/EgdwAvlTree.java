@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 /**
  * 基于二叉树查找Map的AVL自平衡二叉树
- *
+ * 对于查询较多的使用情况,AVL树很好用
  * @param <K>
  * @param <V>
  *

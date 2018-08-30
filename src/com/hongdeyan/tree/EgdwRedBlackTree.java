@@ -1,5 +1,7 @@
 package com.hongdeyan.tree;
 
+import java.util.NoSuchElementException;
+
 /**
  * 红黑树
  *
@@ -13,6 +15,7 @@ package com.hongdeyan.tree;
  * 对于每个节点，从该点至null（树尾端）的任何路径，都含有相同个数的黑色节点。
  * 结构调整过程包含两个基本操作：左旋（Rotate Left），右旋（RotateRight）。
  * </p>
+ * 统计性能更优(综合增删改查的所有的操作)
  */
 public class EgdwRedBlackTree<K extends Comparable, V> {
 
@@ -56,6 +59,7 @@ public class EgdwRedBlackTree<K extends Comparable, V> {
 
     private Node<K, V> addElement(Node<K, V> root, K key, V value, int type) {
         if (root == null) {
+            size++;
             return new Node<K, V>(type, key, value);
         }
         int compareResult = key.compareTo(root.key);
@@ -67,21 +71,43 @@ public class EgdwRedBlackTree<K extends Comparable, V> {
             root.leftNode = addElement(root.leftNode, key, value, EgdwRedBlackTree.RED);
         } else if (compareResult == 0) {
             //如果相等的话
-            //不进行任何操作
+            //修改为当前的值
+            root.value = value;
         }
 
-
-        //比较左右节点和父节点颜色是否相同
-        if (root.leftNode != null && root.leftNode.type == root.type) {
-
-        } else if (root.rightNode != null && root.rightNode.type == root.type) {
-
-        } else {
-            //如果颜色不相同的话
+        if (!isRed(root.leftNode) && isRed(root.rightNode)) {
+            //左旋转
+            root = leftRotate(root);
         }
 
+        if (isRed(root.leftNode) && isRed(root.leftNode.leftNode)) {
+            //右旋转
+            root = rightRotate(root);
+        }
+
+        if (isRed(root.leftNode) && isRed(root.rightNode)) {
+            //颜色翻转
+            root = flipColors(root);
+        }
 
         return root;
+    }
+
+
+    /**
+     * 判断是否是红色节点
+     *
+     * @param root 传入的节点
+     * @return true红色节点 false黑色节点
+     */
+    private boolean isRed(Node<K, V> root) {
+        if (root == null) {
+            return false;
+        }
+        if (root.type == RED) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -90,10 +116,11 @@ public class EgdwRedBlackTree<K extends Comparable, V> {
      *
      * @param node
      */
-    private void flipColors(Node<K, V> node) {
+    private Node<K, V> flipColors(Node<K, V> node) {
         node.type = RED;
         node.leftNode.type = BLACK;
         node.rightNode.type = BLACK;
+        return node;
     }
 
     /**
@@ -136,12 +163,87 @@ public class EgdwRedBlackTree<K extends Comparable, V> {
         return x;
     }
 
-    public V remove(Object key) {
-        return null;
+//    public boolean remove(Object key) {
+//        return removeElement(root, (K) key) == null ? false : true;
+//    }
+
+
+//    private Node<K, V> removeElement(Node<K, V> root, K element) {
+//        if (root == null) {
+//            throw new NoSuchElementException("node not found");
+//        }
+//        int compareResult = element.compareTo(root.key);
+//        if (compareResult > 0) {
+//            root.rightNode = removeElement(root.rightNode, element);
+//        } else if (compareResult < 0) {
+//            root.leftNode = removeElement(root.leftNode, element);
+//        } else {
+//            //如果相同,进行删除操作
+//            //需要分三种情况
+//            Node leftNode = root.leftNode;
+//            Node rightNode = root.rightNode;
+//            //如果没有子node的情况
+//            if (leftNode == null && rightNode == null) {
+//                root = null;
+//                size--;
+//                return root;
+//            } else if (leftNode == null && rightNode != null) {
+//                //如果左孩子没有.右孩子有
+//                root.key = ((K) rightNode.key);
+//                root.rightNode = (rightNode.rightNode);
+//                size--;
+//            } else if (leftNode != null && rightNode == null) {
+//                //如果左孩子有,右孩子没有
+//                root.key = ((K) leftNode.key);
+//                root.leftNode = (leftNode.leftNode);
+//                size--;
+//            } else {
+//                //如果左右孩子都有,找到左节点最大的数或者右节点最小的数进行替换
+//                K e = (K) findBiggestNode(leftNode).key;
+//                //返回左节点最大的数并删除左节点最大的数
+////                root.setElement((E) removeBiggestNode(leftNode, null));
+//                root.key = (e);
+//                root.leftNode = (removeElement(leftNode, e));
+//            }
+//        }
+//        //调整红黑树
+//        if (!isRed(root.leftNode) && isRed(root.rightNode)) {
+//            root = leftRotate(root);
+//        }
+//
+//        if (isRed(root.leftNode) && isRed(root.leftNode.leftNode)) {
+//            root = rightRotate(root);
+//        }
+//
+//        if (isRed(root.leftNode) && isRed(root.rightNode)) {
+//            root = flipColors(root);
+//        }
+//
+//        return root;
+//
+//    }
+
+
+    /**
+     * 查找某个节点下最大的值
+     *
+     * @param root 节点
+     * @return 返回最大的值
+     */
+    private Node<K, V> findBiggestNode(Node<K, V> root) {
+        if (root == null) {
+            throw new UnsatisfiedLinkError("not found node");
+        }
+        if (root.rightNode != null) {
+            return findBiggestNode(root.rightNode);
+        } else {
+            return root;
+        }
     }
 
     public void clear() {
-
+        root = null;
+        size = 0;
     }
 
 
